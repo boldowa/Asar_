@@ -1,0 +1,14 @@
+*.o
+*.obj
+*.gcda
+*.gcno
+*.gcov
+*.a
+*.d
+*.dep
+tags
+
+Asar_tests
+Asar_tests.txt
+gcov/*
+
