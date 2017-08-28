@@ -440,7 +440,8 @@ inline string ftostr(long double value)
 	char rval[256];
 	// RPG Hacker: Ridiculously high precision, I know, but we're working with long doubles
 	// here and can afforc it, so no need to waste any precision
-	sprintf(rval, "%.100Lf", value);
+	//sprintf(rval, "%.100Lf", value);
+	sprintf(rval, "%.100lf", (double)value);
 	if (strchr(rval, '.'))//nuke useless zeroes
 	{
 		char * end=strrchr(rval, '\0')-1;

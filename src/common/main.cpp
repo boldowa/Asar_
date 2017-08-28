@@ -13,7 +13,7 @@
 #include "asar.h"
 
 extern const int asarver_maj=1;
-extern const int asarver_min=5;
+extern const int asarver_min=4;
 extern const int asarver_bug=0;
 extern const bool asarver_beta=false;
 
@@ -61,7 +61,7 @@ bool setmapper()
 {
 	int maxscore=-99999;
 	mapper_t bestmap=lorom;
-	mapper_t maps[]={lorom, hirom, exlorom, exhirom};
+	mapper_t maps[]={lorom, hirom};
 	for (size_t mapid=0;mapid<sizeof(maps)/sizeof(maps[0]);mapid++)
 	{
 		mapper=maps[mapid];
@@ -158,14 +158,6 @@ static int getlenforlabel(int snespos, int thislabel, bool exists)
 		if (thislabel&0xFF000000) return 3;
 		else if ((thislabel>>16)==optimizeforbank) return 2;
 		else return 3;
-	}
-	else if((thislabel >> 16) == 0x7E && (thislabel & 0xFFFF) < 0x100)
-	{
-		return 1;
-	}
-	else if ((thislabel >> 16) == 0x7E && (thislabel & 0xFFFF) < 0x2000)
-	{
-		return 2;
 	}
 	else if ((thislabel|snespos)&0xFF000000)
 	{
@@ -531,14 +523,10 @@ void assemblefile(const char * filename, bool toplevel)
 			char * comment=line;
 			while ((comment=strqchr(comment, ';')))
 			{
-				if (comment[1]!='@')
-				{
-					comment[0]='\0';
-				}
+				if (comment[1]!='@') comment[0]='\0';
 				else
 				{
-					// RPG Hacker: Why was this line even needed to begin with?
-					//if (strncasecmp(comment+2, "xkas", 4)) comment[1]=' ';
+					if (strncasecmp(comment+2, "xkas", 4)) comment[1]=' ';
 					comment[0]=' ';
 				}
 			}
@@ -618,7 +606,6 @@ void assemblefile(const char * filename, bool toplevel)
 bool checksum=true;
 extern lightweight_map<string, unsigned int> labels;
 extern autoarray<string> sublabels;
-extern autoarray<writtenblockdata> writtenblocks;
 extern string ns;
 
 struct macrodata
@@ -661,8 +648,6 @@ void reseteverything()
 
 	filecontents.traverse(clearfile);
 	filecontents.clear();
-
-	writtenblocks.reset();
 
 	optimizeforbank=-1;
 

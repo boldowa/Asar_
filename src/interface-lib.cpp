@@ -60,8 +60,6 @@ struct definedata {
 };
 extern lightweight_map<string, string> defines;
 
-extern autoarray<writtenblockdata> writtenblocks;
-
 void print(const char * str)
 {
 	prints[numprint++]=strdup(str);
@@ -167,7 +165,7 @@ EXPORT int asar_version()
 EXPORT int asar_apiversion()
 {
 	expectsNewAPI=true;
-	return 300;
+	return 201;
 }
 
 EXPORT bool asar_reset()
@@ -195,7 +193,7 @@ EXPORT bool asar_patch(const char * patchloc, char * romdata_, int buflen, int *
 	}
 	else romdata_r=(unsigned char*)romdata_;
 	romdata=(unsigned char*)malloc(maxromsize);
-	memcpy((unsigned char*)romdata, romdata_, *romlen_);
+	memcpy(romdata, romdata_, *romlen_);
 	resetdllstuff();
 	romlen=*romlen_;
 	romlen_r=*romlen_;
@@ -213,15 +211,12 @@ EXPORT bool asar_patch(const char * patchloc, char * romdata_, int buflen, int *
 	if (buflen<romlen) error<errnull>(pass, "The given buffer is too small to contain the resulting ROM.");
 	if (errored)
 	{
-		if (buflen != maxromsize) free((unsigned char*)romdata);
+		free(romdata);
 		return false;
 	}
-	if (*romlen_ != buflen)
-	{
-		*romlen_ = romlen;
-	}
+	*romlen_=romlen;
 	memcpy(romdata_, romdata, romlen);
-	free((unsigned char*)romdata);
+	free(romdata);
 	return true;
 }
 
@@ -230,10 +225,10 @@ EXPORT int asar_maxromsize()
 	return maxromsize;
 }
 
-extern chartabledata table;
+extern unsigned int table[256];
 EXPORT const unsigned int * asar_gettable()
 {
-	return table.table;
+	return table;
 }
 
 EXPORT const errordata * asar_geterrors(int * count)
@@ -346,16 +341,4 @@ EXPORT double asar_math(const char * str, const char ** e)//degrading to normal 
 	ismath=false;
 	return rval;
 }
-
-EXPORT const writtenblockdata * asar_getwrittenblocks(int * count)
-{
-	*count = writtenblocks.count;
-	return writtenblocks;
-}
-
-EXPORT mapper_t asar_getmapper()
-{
-	return mapper;
-}
-
 #endif
