@@ -228,11 +228,8 @@ void reset()
 	for (int i=0;i<num;i++)
 	{
 		free((void*)indexes[i]);
-		indexes[i] = NULL;
-		//ptr[i]->~right();
-		delete(ptr[i]);
-		//free(ptr[i]);
-		ptr[i] = NULL;
+		ptr[i]->~right();
+		free(ptr[i]);
 	}
 	free(indexes);
 	free(ptr);

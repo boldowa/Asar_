@@ -1,9 +1,8 @@
+#undef new
 #include "libstr.h"
 #include "asar.h"
 #include "autoarray.h"
 #include "scapegoat.hpp"
-
-#undef new
 
 template<typename t> void error(int pass, const char * e_);
 bool confirmname(const char * name);

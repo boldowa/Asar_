@@ -1,3 +1,4 @@
+#if 0
 #include "asar.h"
 #include "scapegoat.hpp"
 #include "libstr.h"
@@ -74,3 +75,4 @@ TEST(if_patch, valid_src)
 	//CHECK(asar_patch(FP, data, dsize, &len));
 }
 
+#endif

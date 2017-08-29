@@ -72,8 +72,7 @@ void fillerror(errordata& myerr, const char * type, const char * str)
 	myerr.filename=strdup(thisfilename);
 	myerr.line=thisline;
 	if (thisblock) myerr.block=strdup(thisblock);
-//	else myerr.block="";
-	else myerr.block=(char*)calloc(1, sizeof(char));
+	else myerr.block="";
 	myerr.rawerrdata=strdup(str);
 	myerr.fullerrdata=strdup(S getdecor()+type+str+(thisblock?(S" ["+thisblock+"]"):""));
 	myerr.callerline=callerline;

@@ -1,6 +1,11 @@
 "-------------------
 " Set path
 "-------------------
+let s:cpp_ver = "7.1.1"
+let s:env = "x86_64-pc-linux-gnu"
+
+let &path.=",/usr/include/c++/".s:cpp_ver
+let &path.=",/usr/include/c++/".s:cpp_ver."/".s:env
 let &path.=",".$CPPUTEST_HOME."/include"
 let &path.=",".getcwd()."/include"
 let includes = split(glob("include/*"), "\n")
