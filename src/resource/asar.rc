@@ -1,1 +1,47 @@
+//------------------------------------------------
+// asar.rc
+//------------------------------------------------
+#if defined(_WIN32) || defined(WIN32)
+#  if defined(INTERFACE_CLI)
+#    define ResFileName "asar.exe\0"
+#    define ASAR_FT VFT_APP
+#  elif defined(INTERFACE_LIB)
+#    define ResFileName "asar.dll\0"
+#    define ASAR_FT VFT_DLL
+#  endif
+#else
+#  error "Use define macro for detect system. (e.g. \"-D_WIN32\")"
+#endif
+
+#include <windows.h>
+
 1 ICON DISCARDABLE "asar.ico"
+
+VS_VERSION_INFO VERSIONINFO
+	FILEVERSION	1,5,0,0
+	PRODUCTVERSION	1,5,0,0
+	FILEOS		VOS__WINDOWS32
+	FILETYPE	ASAR_FT
+	FILESUBTYPE	VFT2_UNKNOWN
+	FILEFLAGS	0x0L
+	FILEFLAGSMASK	VS_FFI_FILEFLAGSMASK
+{
+	BLOCK "StringFileInfo"
+	{
+		BLOCK "040904b0"
+		{
+			VALUE "CompanyName",		"\0"
+			VALUE "FileDescription",	"Alcaro's assembler\0"
+//			VALUE "FileVersion",		0
+//			VALUE "InternalVersion",	"\0"
+			VALUE "OriginalFileName",	ResFileName
+			VALUE "LegalCopyright",		"(C) Alcaro\0"
+			VALUE "ProductName",		"Asar\0"
+			VALUE "ProductVersion",		"1.50"
+		}
+	}
+	BLOCK "VarFileInfo"
+	{
+		VALUE "Translation", 0x0409, 1200
+	}
+}

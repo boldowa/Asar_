@@ -88,10 +88,14 @@ set_property(DIRECTORY PROPERTY VS_STARTUP_PROJECT "libasar")
 ### build
 file(GLOB SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*/*.cpp")
 list(REMOVE_ITEM SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/util/AsarBuildTime.cpp")
+set(RES "")
+if(MINGW OR MSVC)
+        set(RES "${CMAKE_CURRENT_SOURCE_DIR}/src/resource/asar.rc")
+endif()
 
 set(INCROOT ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(libasar SHARED ${SRC_FILES} "${CMAKE_CURRENT_SOURCE_DIR}/src/interface-lib.cpp")
+add_library(libasar SHARED ${SRC_FILES} ${RES} "${CMAKE_CURRENT_SOURCE_DIR}/src/interface-lib.cpp")
 target_include_directories(libasar PRIVATE ${INCROOT} ${INCROOT}/common ${INCROOT}/arch ${INCROOT}/lib ${INCROOT}/util)
 target_compile_options(libasar PRIVATE ${DEFINE_PREFIX}INTERFACE_LIB)
 set_target_properties(libasar PROPERTIES OUTPUT_NAME "asar")
@@ -99,7 +103,7 @@ if(MINGW OR WIN32)
         set_target_properties(libasar PROPERTIES PREFIX "")
 endif()
 
-add_executable(asar ${SRC_FILES} "${CMAKE_CURRENT_SOURCE_DIR}/src/interface-cli.cpp")
+add_executable(asar ${SRC_FILES} ${RES} "${CMAKE_CURRENT_SOURCE_DIR}/src/interface-cli.cpp")
 target_include_directories(asar PRIVATE ${INCROOT} ${INCROOT}/common ${INCROOT}/arch ${INCROOT}/lib ${INCROOT}/util)
 target_compile_options(asar PRIVATE ${DEFINE_PREFIX}INTERFACE_CLI)
 
