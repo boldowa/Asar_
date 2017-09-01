@@ -19,6 +19,6 @@ fi
 rm -rf CMake* cmake_*
 
 echo "Build start..."
-cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain/mingw-x86.cmake ..; cmake ..; make
+cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain/mingw-x86.cmake ..; cmake ..; make -j2
 sync
 
