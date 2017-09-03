@@ -173,6 +173,7 @@ void deinitmathcore();
 
 EXPORT bool asar_reset()
 {
+	errored = false;
 	resetdllstuff();
 	deinitmathcore();
 	pass=0;
